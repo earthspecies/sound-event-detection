@@ -1,0 +1,11 @@
+---
+# LSI run — BirdCODE frame detector over the full iNaturalist training split.
+dataset:
+  config: configs/data/inference/inaturalist.yml
+  id_column: originals_path
+
+output:
+  dir: large_scale_inference/inaturalist/birdcode
+  detail: preds
+  files_per_shard: 1000
+  preds_threshold: 0.05

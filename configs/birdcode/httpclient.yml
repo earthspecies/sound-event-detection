@@ -1,0 +1,10 @@
+# Http-client config for sed-eval (--httpclient-config), consumed by
+# detector_client_from_config. A pure client config: `url` names the served
+# model (a sed.app detector server or a sed.denoising_app denoising server —
+# the client kind is auto-detected from the server's GET / metadata). For a
+# server on another host (e.g. a Slurm serve job), set `url` to its host:port
+# (written to the job's addr file).
+
+url: http://localhost:8100
+timeout: 300
+retries: 3

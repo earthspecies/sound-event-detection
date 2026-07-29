@@ -1,0 +1,12 @@
+---
+# LSI run — BirdCODE frame detector over the full Xeno-canto training split.
+
+dataset:
+  config: configs/data/inference/xeno_canto.yml
+  id_column: relative_path
+
+output:
+  dir: large_scale_inference/xeno-canto/birdcode
+  detail: preds
+  files_per_shard: 1000
+  preds_threshold: 0.05

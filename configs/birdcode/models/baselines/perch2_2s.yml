@@ -1,0 +1,7 @@
+# Server-launch config: Perch2 baseline as a sliding-window detector (2 s analysis).
+
+type: perch2
+addr_file: ~/perch2-server/server.addr
+window_size: 5.0
+hop_size: 2.0
+analysis_window: 2.0

@@ -1,0 +1,11 @@
+---
+# LSI features — v0minimal acoustic features on the iNaturalist BirdCODE detections.
+input:
+  run_dir: large_scale_inference/inaturalist/birdcode
+  postprocessing: postprocessed_thr0.50_merge1.00_nms0.80_geo
+  dataset:
+    config: configs/data/inference/inaturalist.yml
+    id_column: originals_path
+
+features:
+  version: v0minimal

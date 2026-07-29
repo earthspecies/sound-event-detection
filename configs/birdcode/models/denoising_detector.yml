@@ -1,0 +1,16 @@
+# Server-launch model config for the denoising detector server
+# (sed.denoising_app / serving/serve_denoising_detector.py, selected via
+# SED_MODEL_CONFIG). The model wraps two clients; `detector` and `separator`
+# are pure http-client configs naming their servers, which must be running
+# when this server starts (see jobs/serve_denoising_detector.sh, which patches
+# these urls from the running servers' addr files).
+
+type: denoising_detector
+detector:
+  url: http://localhost:8100
+  timeout: 300
+separator:
+  url: http://localhost:8200
+  timeout: 300
+threshold: 0.5
+resampling_method: torchaudio_kaiser_fast

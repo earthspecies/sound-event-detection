@@ -1,0 +1,27 @@
+# Smoke-test companion of frame_eval.yml: a single small dataset (XC-AJ) with the
+# same scoring settings, for quickly verifying a model/server before a full run.
+# Pair with any 32 kHz model config (configs/birdcode/models/*.yml).
+
+type: sed
+frame_datasets:
+  - config: configs/data/xcaj.yml
+    species_column: Species
+clip_datasets: []
+batch_size: 8
+inference:
+  overlap: 0.5
+frame_eval:
+  iou_thresholds:
+    - 0.2
+    - 0.5
+  n_thresholds: 101
+  min_threshold: 0.0
+  discretization_frame_rate: 100.0
+  thresholds_for_thresholded_metrics:
+    - 0.5
+  postprocessing:
+    merge_max_gap: 1.0
+    min_event_duration: 0.01
+    nms:
+      iou_threshold: 0.8
+output_dir: results/eval/birdcode/smoke

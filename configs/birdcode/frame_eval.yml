@@ -1,0 +1,166 @@
+# Frame-level (strong-label) eval over WABAD + Powdermill + XC-AJ at 32 kHz.
+# Migrated from the pre-refactor evaluate_*.yml configs (removed; see git history).
+# Pair with any 32 kHz model config (configs/birdcode/models/*.yml).
+
+type: sed
+frame_datasets:
+  - config: configs/data/wabad/ARD.yml
+    species_column: Species
+  - config: configs/data/wabad/BAM.yml
+    species_column: Species
+  - config: configs/data/wabad/BIAL.yml
+    species_column: Species
+  - config: configs/data/wabad/BMT.yml
+    species_column: Species
+  - config: configs/data/wabad/BOLIN.yml
+    species_column: Species
+  - config: configs/data/wabad/BRCAS.yml
+    species_column: Species
+  - config: configs/data/wabad/BRE.yml
+    species_column: Species
+  - config: configs/data/wabad/BUR.yml
+    species_column: Species
+  - config: configs/data/wabad/CARI.yml
+    species_column: Species
+  - config: configs/data/wabad/CAT.yml
+    species_column: Species
+  - config: configs/data/wabad/CB.yml
+    species_column: Species
+  - config: configs/data/wabad/CLH.yml
+    species_column: Species
+  - config: configs/data/wabad/COU.yml
+    species_column: Species
+  - config: configs/data/wabad/CRUZ.yml
+    species_column: Species
+  - config: configs/data/wabad/DEVA.yml
+    species_column: Species
+  - config: configs/data/wabad/DONG.yml
+    species_column: Species
+  - config: configs/data/wabad/DUNAS.yml
+    species_column: Species
+  - config: configs/data/wabad/DYOM.yml
+    species_column: Species
+  - config: configs/data/wabad/EMP.yml
+    species_column: Species
+  - config: configs/data/wabad/EVROS.yml
+    species_column: Species
+  - config: configs/data/wabad/FEU.yml
+    species_column: Species
+  - config: configs/data/wabad/FNCA.yml
+    species_column: Species
+  - config: configs/data/wabad/GLEN.yml
+    species_column: Species
+  - config: configs/data/wabad/GTLU.yml
+    species_column: Species
+  - config: configs/data/wabad/HAG.yml
+    species_column: Species
+  - config: configs/data/wabad/HAK.yml
+    species_column: Species
+  - config: configs/data/wabad/HAR.yml
+    species_column: Species
+  - config: configs/data/wabad/HONDO.yml
+    species_column: Species
+  - config: configs/data/wabad/HUAP.yml
+    species_column: Species
+  - config: configs/data/wabad/JUNCA.yml
+    species_column: Species
+  - config: configs/data/wabad/KAR.yml
+    species_column: Species
+  - config: configs/data/wabad/KIB.yml
+    species_column: Species
+  - config: configs/data/wabad/LIM.yml
+    species_column: Species
+  - config: configs/data/wabad/MABI.yml
+    species_column: Species
+  - config: configs/data/wabad/MAPIMI.yml
+    species_column: Species
+  - config: configs/data/wabad/MARTI.yml
+    species_column: Species
+  - config: configs/data/wabad/MILLAN.yml
+    species_column: Species
+  - config: configs/data/wabad/MONTEB.yml
+    species_column: Species
+  - config: configs/data/wabad/MOPU.yml
+    species_column: Species
+  - config: configs/data/wabad/NAV.yml
+    species_column: Species
+  - config: configs/data/wabad/NL.yml
+    species_column: Species
+  - config: configs/data/wabad/OESF.yml
+    species_column: Species
+  - config: configs/data/wabad/OIO.yml
+    species_column: Species
+  - config: configs/data/wabad/OLIV.yml
+    species_column: Species
+  - config: configs/data/wabad/PETI.yml
+    species_column: Species
+  - config: configs/data/wabad/PGF.yml
+    species_column: Species
+  - config: configs/data/wabad/PINA.yml
+    species_column: Species
+  - config: configs/data/wabad/PITI.yml
+    species_column: Species
+  - config: configs/data/wabad/POZO.yml
+    species_column: Species
+  - config: configs/data/wabad/PUUL.yml
+    species_column: Species
+  - config: configs/data/wabad/QR.yml
+    species_column: Species
+  - config: configs/data/wabad/RBA.yml
+    species_column: Species
+  - config: configs/data/wabad/RFP.yml
+    species_column: Species
+  - config: configs/data/wabad/RGU.yml
+    species_column: Species
+  - config: configs/data/wabad/RME.yml
+    species_column: Species
+  - config: configs/data/wabad/ROTOK.yml
+    species_column: Species
+  - config: configs/data/wabad/SAL.yml
+    species_column: Species
+  - config: configs/data/wabad/SBN.yml
+    species_column: Species
+  - config: configs/data/wabad/SCHF.yml
+    species_column: Species
+  - config: configs/data/wabad/SCHG.yml
+    species_column: Species
+  - config: configs/data/wabad/SD.yml
+    species_column: Species
+  - config: configs/data/wabad/SITH.yml
+    species_column: Species
+  - config: configs/data/wabad/SLOB.yml
+    species_column: Species
+  - config: configs/data/wabad/SPMCO.yml
+    species_column: Species
+  - config: configs/data/wabad/TAM.yml
+    species_column: Species
+  - config: configs/data/wabad/UNI.yml
+    species_column: Species
+  - config: configs/data/wabad/VER.yml
+    species_column: Species
+  - config: configs/data/wabad/VIL.yml
+    species_column: Species
+  - config: configs/data/powdermill.yml
+    species_column: Species
+  - config: configs/data/xcaj.yml
+    species_column: Species
+clip_datasets: []
+batch_size: 8
+inference:
+  overlap: 0.5
+frame_eval:
+  iou_thresholds:
+    - 0.2
+    - 0.5
+  n_thresholds: 101
+  min_threshold: 0.0
+  discretization_frame_rate: 100.0
+  thresholds_for_thresholded_metrics:
+    - 0.5
+  postprocessing:
+    merge_max_gap: 1.0
+    min_event_duration: 0.01
+    nms:
+      iou_threshold: 0.8
+output_dir: results/eval/birdcode/frame
+checkpoint_interval: 50
