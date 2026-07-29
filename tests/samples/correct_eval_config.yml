@@ -1,0 +1,30 @@
+tasks:
+  - task_type: classification
+    datasets:
+      - dataset_name: beans_zero
+        split: esc50
+        streaming: true
+        backend: polars
+    metrics:
+      - name: accuracy
+      - name: f1
+        scorer_kwargs:
+          average: macro
+          zero_division: 0
+      - name: recall
+        scorer_kwargs:
+          average: macro
+          zero_division: 0
+  - task_type: captioning
+    datasets:
+      - dataset_name: beans_zero
+        split: captioning
+        streaming: true
+        backend: polars
+    metrics:
+      - name: spider
+batch_size: 2
+num_workers: 0
+sanity_check_only: true
+sanity_check_iters: 10
+output_path: null

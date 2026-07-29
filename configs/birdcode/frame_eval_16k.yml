@@ -1,0 +1,166 @@
+# 16 kHz companion of frame_eval.yml (identical sites, *_16k variants).
+# For 16 kHz models such as the beats_sl_all baseline. inference.overlap is ignored by
+# sliding-window baselines (their overlap is fixed by hop_size/window_size).
+
+type: sed
+frame_datasets:
+  - config: configs/data/wabad_16k/ARD.yml
+    species_column: Species
+  - config: configs/data/wabad_16k/BAM.yml
+    species_column: Species
+  - config: configs/data/wabad_16k/BIAL.yml
+    species_column: Species
+  - config: configs/data/wabad_16k/BMT.yml
+    species_column: Species
+  - config: configs/data/wabad_16k/BOLIN.yml
+    species_column: Species
+  - config: configs/data/wabad_16k/BRCAS.yml
+    species_column: Species
+  - config: configs/data/wabad_16k/BRE.yml
+    species_column: Species
+  - config: configs/data/wabad_16k/BUR.yml
+    species_column: Species
+  - config: configs/data/wabad_16k/CARI.yml
+    species_column: Species
+  - config: configs/data/wabad_16k/CAT.yml
+    species_column: Species
+  - config: configs/data/wabad_16k/CB.yml
+    species_column: Species
+  - config: configs/data/wabad_16k/CLH.yml
+    species_column: Species
+  - config: configs/data/wabad_16k/COU.yml
+    species_column: Species
+  - config: configs/data/wabad_16k/CRUZ.yml
+    species_column: Species
+  - config: configs/data/wabad_16k/DEVA.yml
+    species_column: Species
+  - config: configs/data/wabad_16k/DONG.yml
+    species_column: Species
+  - config: configs/data/wabad_16k/DUNAS.yml
+    species_column: Species
+  - config: configs/data/wabad_16k/DYOM.yml
+    species_column: Species
+  - config: configs/data/wabad_16k/EMP.yml
+    species_column: Species
+  - config: configs/data/wabad_16k/EVROS.yml
+    species_column: Species
+  - config: configs/data/wabad_16k/FEU.yml
+    species_column: Species
+  - config: configs/data/wabad_16k/FNCA.yml
+    species_column: Species
+  - config: configs/data/wabad_16k/GLEN.yml
+    species_column: Species
+  - config: configs/data/wabad_16k/GTLU.yml
+    species_column: Species
+  - config: configs/data/wabad_16k/HAG.yml
+    species_column: Species
+  - config: configs/data/wabad_16k/HAK.yml
+    species_column: Species
+  - config: configs/data/wabad_16k/HAR.yml
+    species_column: Species
+  - config: configs/data/wabad_16k/HONDO.yml
+    species_column: Species
+  - config: configs/data/wabad_16k/HUAP.yml
+    species_column: Species
+  - config: configs/data/wabad_16k/JUNCA.yml
+    species_column: Species
+  - config: configs/data/wabad_16k/KAR.yml
+    species_column: Species
+  - config: configs/data/wabad_16k/KIB.yml
+    species_column: Species
+  - config: configs/data/wabad_16k/LIM.yml
+    species_column: Species
+  - config: configs/data/wabad_16k/MABI.yml
+    species_column: Species
+  - config: configs/data/wabad_16k/MAPIMI.yml
+    species_column: Species
+  - config: configs/data/wabad_16k/MARTI.yml
+    species_column: Species
+  - config: configs/data/wabad_16k/MILLAN.yml
+    species_column: Species
+  - config: configs/data/wabad_16k/MONTEB.yml
+    species_column: Species
+  - config: configs/data/wabad_16k/MOPU.yml
+    species_column: Species
+  - config: configs/data/wabad_16k/NAV.yml
+    species_column: Species
+  - config: configs/data/wabad_16k/NL.yml
+    species_column: Species
+  - config: configs/data/wabad_16k/OESF.yml
+    species_column: Species
+  - config: configs/data/wabad_16k/OIO.yml
+    species_column: Species
+  - config: configs/data/wabad_16k/OLIV.yml
+    species_column: Species
+  - config: configs/data/wabad_16k/PETI.yml
+    species_column: Species
+  - config: configs/data/wabad_16k/PGF.yml
+    species_column: Species
+  - config: configs/data/wabad_16k/PINA.yml
+    species_column: Species
+  - config: configs/data/wabad_16k/PITI.yml
+    species_column: Species
+  - config: configs/data/wabad_16k/POZO.yml
+    species_column: Species
+  - config: configs/data/wabad_16k/PUUL.yml
+    species_column: Species
+  - config: configs/data/wabad_16k/QR.yml
+    species_column: Species
+  - config: configs/data/wabad_16k/RBA.yml
+    species_column: Species
+  - config: configs/data/wabad_16k/RFP.yml
+    species_column: Species
+  - config: configs/data/wabad_16k/RGU.yml
+    species_column: Species
+  - config: configs/data/wabad_16k/RME.yml
+    species_column: Species
+  - config: configs/data/wabad_16k/ROTOK.yml
+    species_column: Species
+  - config: configs/data/wabad_16k/SAL.yml
+    species_column: Species
+  - config: configs/data/wabad_16k/SBN.yml
+    species_column: Species
+  - config: configs/data/wabad_16k/SCHF.yml
+    species_column: Species
+  - config: configs/data/wabad_16k/SCHG.yml
+    species_column: Species
+  - config: configs/data/wabad_16k/SD.yml
+    species_column: Species
+  - config: configs/data/wabad_16k/SITH.yml
+    species_column: Species
+  - config: configs/data/wabad_16k/SLOB.yml
+    species_column: Species
+  - config: configs/data/wabad_16k/SPMCO.yml
+    species_column: Species
+  - config: configs/data/wabad_16k/TAM.yml
+    species_column: Species
+  - config: configs/data/wabad_16k/UNI.yml
+    species_column: Species
+  - config: configs/data/wabad_16k/VER.yml
+    species_column: Species
+  - config: configs/data/wabad_16k/VIL.yml
+    species_column: Species
+  - config: configs/data/powdermill_16k.yml
+    species_column: Species
+  - config: configs/data/xcaj_16k.yml
+    species_column: Species
+clip_datasets: []
+batch_size: 32
+inference:
+  overlap: 0.5
+frame_eval:
+  iou_thresholds:
+    - 0.2
+    - 0.5
+  n_thresholds: 101
+  min_threshold: 0.0
+  discretization_frame_rate: 100.0
+  thresholds_for_thresholded_metrics:
+    - 0.5
+  postprocessing:
+    merge_max_gap: 1.0
+    min_event_duration: 0.01
+    nms:
+      iou_threshold: 0.8
+output_dir: results/eval/birdcode/frame_16k
+checkpoint_interval: 50

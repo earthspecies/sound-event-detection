@@ -1,0 +1,173 @@
+[project]
+name = "sound-event-detection"
+version = "0.1.0"
+description = "Frame-level sound event detection models for bioacoustics"
+readme = "README.md"
+requires-python = ">=3.12"
+license = { text = "MIT" }
+# Union of the (trimmed) esp_research core deps + sound_event_detection deps.
+# `esp-research` is NOT listed: it now ships as a local package under src/.
+dependencies = [
+    "alp-data>=1.10.0",
+    "google-cloud-logging>=3.12.1",
+    "httpx>=0.28.0",
+    "numpy>=2.3.3",
+    "scikit-learn>=1.7.2",
+    "pydantic>=2.11.10",
+    "pydantic-settings>=2.7.0",
+    "rich>=14.2.0",
+    "avex>=1.2",
+    "huggingface-hub>=0.20.0",
+    "click>=8.0",
+    "fastapi>=0.115.0",
+    "uvicorn[standard]>=0.34.0",
+    "pandas",
+    "pyyaml",
+    "scipy",
+    "soundfile",
+    "librosa",
+    "torchmetrics",
+    "transformers",
+    "geopandas",
+    "shapely",
+]
+
+[project.scripts]
+sed-eval = "sound_event_detection.evaluation.cli:cli"
+sed-lsi = "sound_event_detection.inference.cli:cli"
+sed-lsi-postprocess = "sound_event_detection.inference.lsi_postprocess_cli:cli"
+sed-lsi-features = "sound_event_detection.inference.lsi_features_cli:cli"
+"sed.app" = "sound_event_detection.main:main"
+"sed.denoising_app" = "sound_event_detection.main:denoising_main"
+
+[project.urls]
+Homepage = "https://github.com/earthspecies/sound-event-detection"
+Repository = "https://github.com/earthspecies/sound-event-detection"
+
+# Ship BOTH packages from one wheel. hatchling handles the multi-package src
+# layout cleanly; uv_build is single-module by default, so switch backends.
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/esp_research", "src/sound_event_detection"]
+
+[dependency-groups]
+dev = [
+    "ruff>=0.11.2",
+    "pytest>=8.4.2",
+    "deptry>=0.23.1",
+    "polars>=1.0",
+]
+# --- torch resolution: carried over from the private root pyproject ---
+cpu = ["torch>=2.6", "torchaudio", "torchvision", "torchcodec"]
+gpu = ["torch>=2.6", "torchaudio", "torchvision", "torchcodec"]
+
+[tool.uv]
+# CPU by default so a fresh clone `uv sync` works on Linux and macOS without CUDA.
+# Reviewers with a CUDA GPU (Linux) use `uv sync --group gpu`.
+default-groups = ["dev", "cpu"]
+# alp-data -> resampy pulls in numba; numba <0.64 has no cp312 wheels and an
+# unbounded numpy pin, so uv would otherwise keep the ancient numba 0.53.1
+# (build-fails on Python 3.12 via llvmlite 0.36.0). Floor it at a version that
+# ships cp312 wheels and supports numpy 2.4.
+# Keep the torch family in lockstep on the cu126 index. torchaudio tops out at
+# 2.11.0 (no 2.12 release) and torchaudio/torchvision don't pin torch in their
+# wheel metadata, so without these caps uv resolves torch 2.12.1 + torchaudio
+# 2.11.0 (ABI-mismatched). Cap torch at the newest fully-matched line (2.11).
+constraint-dependencies = [
+    "numba>=0.64",
+    "torch<2.12",
+    "torchcodec<0.15",
+]
+conflicts = [
+    [
+        { group = "cpu" },
+        { group = "gpu" },
+    ],
+]
+
+# Some protection against supply-chain attacks: refuse packages published in the
+# last 7 days, except the first-party / hardware-pinned ones we track closely.
+exclude-newer = "7 days"
+[tool.uv.exclude-newer-package]
+alp-data = false
+avex = false
+torch = false
+torchaudio = false
+torchvision = false
+torchcodec = false
+
+[[tool.uv.index]]
+name = "pytorch-cu126"
+url = "https://download.pytorch.org/whl/cu126"
+explicit = true
+
+[[tool.uv.index]]
+name = "pytorch-cpu"
+url = "https://download.pytorch.org/whl/cpu"
+explicit = true
+
+[tool.uv.sources]
+torch = [
+    { index = "pytorch-cpu", group = "cpu" },
+    { index = "pytorch-cu126", group = "gpu", marker = "platform_system == 'Linux'" },
+]
+torchaudio = [
+    { index = "pytorch-cpu", group = "cpu" },
+    { index = "pytorch-cu126", group = "gpu", marker = "platform_system == 'Linux'" },
+]
+torchvision = [
+    { index = "pytorch-cpu", group = "cpu" },
+    { index = "pytorch-cu126", group = "gpu", marker = "platform_system == 'Linux'" },
+]
+torchcodec = [
+    { index = "pytorch-cpu", group = "cpu" },
+    { index = "pytorch-cu126", group = "gpu", marker = "platform_system == 'Linux'" },
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py", "check_*.py"]
+
+[tool.ruff]
+line-length = 120
+indent-width = 4
+exclude = ["tests", "scripts"]
+src = ["src"]
+
+[tool.ruff.lint]
+select = [
+    "E4",
+    "E7",
+    "E9",
+    "F",
+    "I",
+    "UP007",
+    "UP045",
+]
+extend-select = ["DOC", "B9", "B", "E", "W", "ANN"]
+fixable = ["ALL"]
+unfixable = []
+preview = true
+
+[tool.ruff.lint.flake8-annotations]
+allow-star-arg-any = true
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+skip-magic-trailing-comma = false
+line-ending = "auto"
+docstring-code-line-length = "dynamic"
+
+[tool.ruff.lint.mccabe]
+max-complexity = 10
+
+[tool.deptry]
+extend_exclude = ["conftest.py", ".venv", "tests"]
+known_first_party = ["esp_research", "sound_event_detection"]
+
+[tool.deptry.per_rule_ignores]
+DEP004 = ["torch"]  # torch is defined in groups; deptry doesn't resolve uv groups

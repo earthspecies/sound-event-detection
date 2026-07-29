@@ -1,0 +1,10 @@
+---
+dataset:
+  dataset_name: wabad
+  sample_rate: 16000
+  split: RFP
+  transformations:
+    - type: species_list_from_selection_table
+      species_column: "Species"
+      output_column: "species_list"
+      selection_table_column: "selection_table"

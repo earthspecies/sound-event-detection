@@ -1,0 +1,11 @@
+---
+# BirdSet UHH test_5s split (5-second clips) for classification eval.
+# Weak labels come from the canonical_name_multispecies metadata column.
+dataset:
+  dataset_name: birdset
+  split: UHH-test_5s
+  sample_rate: 16000
+  transformations:
+    - type: species_list_from_column
+      input_column: canonical_name_multispecies
+      output_column: species_list

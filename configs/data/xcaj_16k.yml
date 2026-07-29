@@ -1,0 +1,10 @@
+---
+dataset:
+  dataset_name: xeno_canto_annotated_jeantet_23
+  sample_rate: 16000
+  split: all
+  transformations:
+    - type: species_list_from_selection_table
+      species_column: "Species"
+      output_column: "species_list"
+      selection_table_column: "selection_table"

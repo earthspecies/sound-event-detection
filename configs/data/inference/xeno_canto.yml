@@ -1,0 +1,19 @@
+---
+# Full Xeno-canto training split at BirdCODE's native 32 kHz.
+#
+# The dataset the LSI run configs (configs/inference/lsi_birdcode_xc*.yml) run
+# inference over. Ported from the old sound-event-detection
+# configs/data/xeno_canto.yml, which additionally ran `species_list_from_columns`
+# + `select_columns`; neither is needed here. The `preds` LSI rung feeds only
+# audio to the served detector, so a species list is irrelevant, and dropping
+# columns was only a training-time memory optimisation — the
+# `latitudeDecimal`/`longitudeDecimal` columns the downstream geo filter reads
+# remain present on the raw items without it.
+#
+# `split: train` reproduces the original run's coverage. The published
+# xeno_canto_selection_tables.yml uses `split: all`; switch this to `all` to
+# cover the whole corpus.
+dataset:
+  dataset_name: xeno-canto
+  split: train
+  sample_rate: 32000

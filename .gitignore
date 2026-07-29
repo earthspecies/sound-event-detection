@@ -1,0 +1,40 @@
+# Python
+__pycache__/
+*.pyc
+*.pyd
+*.pyo
+.Python
+env/
+venv/
+.venv/
+pip-wheel-metadata/
+.pytest_cache/
+.ipynb_checkpoints
+.mypy_cache/
+.ruff_cache/
+.vscode/
+*.egg-info/
+build/
+dist/
+
+# PyTorch / training artifacts
+runs/
+tb_logs/
+lightning_logs/
+checkpoints/
+*.pt
+*.pth
+*.safetensors
+saved_models/
+
+# Logs
+logs/
+*.log
+
+# OS
+.DS_Store
+.Trashes
+Thumbs.db
+
+# Secrets
+.env

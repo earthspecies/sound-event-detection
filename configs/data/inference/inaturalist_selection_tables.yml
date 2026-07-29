@@ -1,0 +1,27 @@
+---
+# Subset of iNaturalist with BirdCODE detections attached as selection tables.
+#
+# The `attach_lsi_selection_tables` transform (registered by
+# `sound_event_detection.data.transforms`) joins each recording to the
+# per-recording selection table produced by the LSI run -> postprocess ->
+# features pipeline and stored in the public GCS bucket below.
+#
+# The transform reads EVERY postprocess shard under the bucket (~5,900 shards,
+# ~2 GB) to build its id index, so a full load is a one-time multi-minute,
+# multi-GB operation. Prepend a `filter` / `cap_per_group` transform to work with
+# a subset (the shard read is unchanged, but the join and everything downstream
+# stay small).
+#
+# `lsi_shard` points at `{run_root}/shard_NNNN.npz`, the heavy per-recording
+# result shards. Those are NOT in this public bucket (only the selection-table
+# shards are), so the pointer is informational here; the `selection_table`
+# column is the usable output.
+dataset:
+  dataset_name: inaturalist
+  split: all
+  sample_rate: 32000  # BirdCODE's native rate; only used if audio is loaded
+  transformations:
+    - type: attach_lsi_selection_tables
+      run_root: gs://esp-data-274503/inaturalist/v0.1.0/model_predictions/sound_event_detection
+      postprocessing: birdcode_detections_thr0.50_merge1.00_nms0.80_geo_features_v0minimal
+      id_column: originals_path

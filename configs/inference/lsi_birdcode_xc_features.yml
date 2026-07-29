@@ -1,0 +1,11 @@
+---
+# LSI features — v0minimal acoustic features on the Xeno-canto BirdCODE detections.
+input:
+  run_dir: large_scale_inference/xeno-canto/birdcode
+  postprocessing: postprocessed_thr0.50_merge1.00_nms0.80_geo
+  dataset:
+    config: configs/data/inference/xeno_canto.yml
+    id_column: relative_path
+
+features:
+  version: v0minimal

@@ -1,0 +1,7 @@
+# Server-launch config: BEATs-SL-All baseline (16 kHz) as a sliding-window detector (2 s).
+# Evaluate with configs/birdcode/frame_eval_16k.yml.
+
+type: beats_sl_all
+addr_file: .server_addrs/beats_sl_all.addr
+window_size: 2.0
+hop_size: 2.0

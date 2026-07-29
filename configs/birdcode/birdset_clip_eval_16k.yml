@@ -1,0 +1,16 @@
+# 16 kHz companion of birdset_clip_eval.yml (identical splits, birdset_16k variants).
+# For 16 kHz models such as the beats_sl_all baseline.
+
+type: sed
+frame_datasets: []
+clip_datasets:
+  - config: configs/data/birdset_16k/HSN-test_5s.yml
+  - config: configs/data/birdset_16k/NBP-test_5s.yml
+  - config: configs/data/birdset_16k/NES-test_5s.yml
+  - config: configs/data/birdset_16k/PER-test_5s.yml
+  - config: configs/data/birdset_16k/POW-test_5s.yml
+  - config: configs/data/birdset_16k/SSW-test_5s.yml
+  - config: configs/data/birdset_16k/SNE-test_5s.yml
+  - config: configs/data/birdset_16k/UHH-test_5s.yml
+batch_size: 32
+output_dir: results/eval/birdcode/birdset_clip_16k

@@ -1,0 +1,15 @@
+---
+# Powdermill dataset config with species list extraction
+# The SpeciesListFromSelectionTable transform extracts species from
+# the selection_table column. FilterBySpeciesList will be applied in
+# code using labels from main config.
+dataset:
+  dataset_name: powdermill
+  split: all
+  sample_rate: 16000
+  data_root: null
+  transformations:
+    - type: species_list_from_selection_table
+      species_column: "Species"
+      output_column: "species_list"
+      selection_table_column: "selection_table"

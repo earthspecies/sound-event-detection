@@ -1,0 +1,23 @@
+tasks:
+  - task_type: classification
+    datasets:
+      - dataset_name: beans_zero
+        split: esc50
+    metrics:
+      - name: no_scorer
+      - name: f1
+        scorer_kwargs:
+          average: macro
+          zero_division: 0
+      - name: recall
+        scorer_kwargs:
+          average: macro
+          zero_division: 0
+  - task_type: captioning
+    datasets:
+      - dataset_name: beans_zero
+        split: captioning
+    metrics:
+      - name: spider
+batch_size: 1
+num_workers: 0

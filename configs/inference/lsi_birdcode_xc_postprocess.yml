@@ -1,0 +1,12 @@
+---
+# LSI postprocess — Xeno-canto BirdCODE run, geography-filtered.
+
+input:
+  run_dir: large_scale_inference/xeno-canto/birdcode
+
+postprocessing:
+  threshold: 0.5
+  merge_max_gap: 1.00
+  nms: 0.8
+  geo_filter: true
+  range_map_dir: geography/range_maps

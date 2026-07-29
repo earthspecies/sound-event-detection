@@ -1,0 +1,7 @@
+---
+# Full iNaturalist training split at BirdCODE's native 32 kHz.
+
+dataset:
+  dataset_name: inaturalist
+  split: train
+  sample_rate: 32000

@@ -1,0 +1,7 @@
+model: gpt-audio-1.5
+system_prompt: |
+  You are an expert in ethology, animal vocal communication and behavior.
+  Answer the user's question about the presented audio.
+prompt_template: "{{ query }}"  # Make sure there's a "query" key in the input to the model
+audio_key: audio  # Make sure there's an "audio" key in the input to the model that contains the audio data
+audio_format: mp3

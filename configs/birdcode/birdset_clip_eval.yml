@@ -1,0 +1,17 @@
+# Clip-level (weak-label) eval on the BirdSet test splits. Migrated from the
+# pre-refactor evaluate_classification_birdset.yml (removed; see git history).
+# Pair with any 32 kHz model config.
+
+type: sed
+frame_datasets: []
+clip_datasets:
+  - config: configs/data/birdset/HSN-test_5s.yml
+  - config: configs/data/birdset/NBP-test_5s.yml
+  - config: configs/data/birdset/NES-test_5s.yml
+  - config: configs/data/birdset/PER-test_5s.yml
+  - config: configs/data/birdset/POW-test_5s.yml
+  - config: configs/data/birdset/SSW-test_5s.yml
+  - config: configs/data/birdset/SNE-test_5s.yml
+  - config: configs/data/birdset/UHH-test_5s.yml
+batch_size: 32
+output_dir: results/eval/birdcode/birdset_clip
