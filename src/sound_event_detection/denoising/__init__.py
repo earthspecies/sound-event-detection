@@ -4,7 +4,7 @@
 satisfies the `SourceSeparatorClient` protocol); `DenoisingDetector` is a model
 that wraps a separator client and a detector client (`DetectorClient`) to
 detect and isolate a focal species. It owns no weights and is served by
-`sound_event_detection.serving.serve_denoising_detector` (``sed.denoising_app``);
+`sound_event_detection.serving.serve_denoising_detector` (``sed-denoising-server``);
 clients reach it through a `ServedDenoisingDetectorClient`.
 """
 

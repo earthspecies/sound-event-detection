@@ -5,9 +5,9 @@ running server; ``timeout`` / ``retries`` / ``auth`` are optional) and connects
 a client to the server it names. The kind of client is auto-detected from the
 server's ``GET /`` metadata:
 
-- a standard detector server (``sed.app``: frame or sliding-window baseline)
+- a standard detector server (``sed-server``: frame or sliding-window baseline)
   -> `ServedDetectorClient`;
-- a denoising detector server (``sed.denoising_app``, whose metadata carries
+- a denoising detector server (``sed-denoising-server``, whose metadata carries
   ``type: denoising_detector``) -> `ServedDenoisingDetectorClient`, which adds
   the denoising surface (`separate_and_detect`, `threshold`, `n_stems`).
 

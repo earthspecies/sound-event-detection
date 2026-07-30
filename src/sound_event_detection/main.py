@@ -1,7 +1,7 @@
 """Convenience launchers for the detector servers.
 
-Wraps ``uvicorn`` so the servers can be started with ``uv run sed.app`` (the
-unified detector server) or ``uv run sed.denoising_app`` (the denoising
+Wraps ``uvicorn`` so the servers can be started with ``uv run sed-server`` (the
+unified detector server) or ``uv run sed-denoising-server`` (the denoising
 detector server) instead of spelling out the ``uv run uvicorn ...:app``
 incantations. The model to serve is selected through the ``SED_MODEL_CONFIG``
 environment variable (see `sound_event_detection.serving.serve_detector` and
@@ -12,10 +12,10 @@ Example
 Deploy with::
 
     SED_MODEL_CONFIG=configs/birdcode/models/birdcode_esp_research.yml \\
-        uv run sed.app --host localhost --port 8100
+        uv run sed-server --host localhost --port 8100
 
     SED_MODEL_CONFIG=configs/birdcode/models/denoising_detector.yml \\
-        uv run sed.denoising_app --host localhost --port 8110
+        uv run sed-denoising-server --host localhost --port 8110
 """
 
 import click

@@ -1,6 +1,6 @@
 # Server-launch config: trained frame detector loaded from the HuggingFace Hub
 # (EarthSpeciesProject/sed-birdcode-ablation-frame_only).
-# Serve with: SED_MODEL_CONFIG=this uv run sed.app
+# Serve with: SED_MODEL_CONFIG=this uv run sed-server
 
 type: frame
 hf_repo_id: EarthSpeciesProject/sed-birdcode-ablation-frame_only

@@ -69,7 +69,7 @@ class LsiOutputConfig(BaseModel):
         The detail rung to emit: ``preds`` (combined predictions only),
         ``denoised`` (predictions + a denoised waveform), or ``stems`` (the same
         plus every stem). The ``denoised`` / ``stems`` rungs require the
-        http-client ``url`` to point at a ``sed.denoising_app`` server. Default
+        http-client ``url`` to point at a ``sed-denoising-server`` server. Default
         ``"preds"``.
     files_per_shard : int
         Number of recordings packed into each ``.npz`` shard.

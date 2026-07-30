@@ -20,9 +20,9 @@ it says nothing about the model. The ``--httpclient-config`` YAML holds the pure
 http-client config consumed by `detector_client_from_config` (``url`` plus
 optional ``timeout`` / ``retries`` / ``auth``); the kind of client is
 auto-detected from the server, so the same file shape reaches a plain detector
-server (``sed.app``) or a denoising detector server (``sed.denoising_app``). The
+server (``sed-server``) or a denoising detector server (``sed-denoising-server``). The
 ``denoised`` / ``stems`` detail rungs require the ``url`` to point at a
-``sed.denoising_app`` server.
+``sed-denoising-server`` server.
 
 The pipeline is dataset-agnostic: any `alp_data` dataset is named by config, the
 file-identifier column defaults to the dataset's own originals-path column, and
@@ -182,7 +182,7 @@ def make_process(
         if not hasattr(model, "separate_and_detect"):
             raise ValueError(
                 f"detail={detail!r} requires a denoising detector server "
-                "(a client with separate_and_detect; point model.url at a sed.denoising_app server)"
+                "(a client with separate_and_detect; point model.url at a sed-denoising-server server)"
             )
         if focal_column is None:
             raise ValueError(f"detail={detail!r} requires dataset.focal_column to be set")
@@ -335,7 +335,7 @@ def _model_lineage(http_client_config: HttpClientConfig, model: DetectorClient) 
     ``retries``, never ``auth``) with the served model's identity: the raw
     ``GET /`` metadata the client captured on connect (`server_config`), which
     carries the model ``type``, weight SHA-256(s), and serving-process git
-    commit for a `sed.app` / `sed.denoising_app` server that exposes them.
+    commit for a `sed-server` / `sed-denoising-server` server that exposes them.
 
     Falls back to the previous behaviour — recording only the connection config
     — with a warning when the server did not expose that identity (e.g. an
@@ -364,7 +364,7 @@ def _model_lineage(http_client_config: HttpClientConfig, model: DetectorClient) 
     warnings.warn(
         "detector server did not expose model identity in its GET / metadata "
         "(no 'git_commit'); recording connection config only in lineage. Serve with an "
-        "updated sed.app / sed.denoising_app to capture the model type, weight SHA-256, and git commit.",
+        "updated sed-server / sed-denoising-server to capture the model type, weight SHA-256, and git commit.",
         stacklevel=2,
     )
     return client_config

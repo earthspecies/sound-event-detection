@@ -5,7 +5,7 @@ wraps a classifier client: it owns no weights, but bundles a detector client (a
 `DetectorClient`, e.g. `ServedDetectorClient`) and a source-separation client
 (a `SourceSeparatorClient`, e.g. `BirdMixItClient`) and drives them together.
 It is served by `sound_event_detection.serving.serve_denoising_detector` (launched with
-``sed.denoising_app``) and reached by evaluation and large-scale inference
+``sed-denoising-server``) and reached by evaluation and large-scale inference
 through a `ServedDenoisingDetectorClient`. Per recording it separates the whole
 file into **stitched, whole-file stems**,
 resamples each stem up to the detector's rate, and runs the detector once over

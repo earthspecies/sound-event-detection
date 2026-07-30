@@ -16,8 +16,8 @@ Splits between an eval config (what to evaluate) and an http-client config
 file holds the pure http-client config consumed by `detector_client_from_config`
 (``url``, optional ``timeout`` / ``retries`` / ``auth``); the kind of client is
 auto-detected from the server, so the same file shape reaches a plain
-detector server (``sed.app``) or a denoising detector server
-(``sed.denoising_app``).
+detector server (``sed-server``) or a denoising detector server
+(``sed-denoising-server``).
 """
 
 import json

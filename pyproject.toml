@@ -37,8 +37,9 @@ sed-eval = "sound_event_detection.evaluation.cli:cli"
 sed-lsi = "sound_event_detection.inference.cli:cli"
 sed-lsi-postprocess = "sound_event_detection.inference.lsi_postprocess_cli:cli"
 sed-lsi-features = "sound_event_detection.inference.lsi_features_cli:cli"
-"sed.app" = "sound_event_detection.main:main"
-"sed.denoising_app" = "sound_event_detection.main:denoising_main"
+sed-folder = "sound_event_detection.inference.folder_cli:cli"
+sed-server = "sound_event_detection.main:main"
+sed-denoising-server = "sound_event_detection.main:denoising_main"
 
 [project.urls]
 Homepage = "https://github.com/earthspecies/sound-event-detection"

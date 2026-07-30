@@ -1,5 +1,5 @@
 # Server-launch config: AudioProtoPNet baseline as a sliding-window detector (2 s analysis).
-# Serve with: SED_MODEL_CONFIG=this uv run sed.app
+# Serve with: SED_MODEL_CONFIG=this uv run sed-server
 
 type: audioprotopnet
 addr_file: ~/audioprotopnet-server/server.addr

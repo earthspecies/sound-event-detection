@@ -32,7 +32,7 @@ The model config dispatches on ``type``:
 Deploy with::
 
     SED_MODEL_CONFIG=configs/birdcode/models/birdcode_esp_research.yml \\
-        uv run sed.app --host localhost --port 8100
+        uv run sed-server --host localhost --port 8100
 
 Environment variables:
 

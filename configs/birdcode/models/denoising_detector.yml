@@ -1,5 +1,5 @@
 # Server-launch model config for the denoising detector server
-# (sed.denoising_app / serving/serve_denoising_detector.py, selected via
+# (sed-denoising-server / serving/serve_denoising_detector.py, selected via
 # SED_MODEL_CONFIG). The model wraps two clients; `detector` and `separator`
 # are pure http-client configs naming their servers, which must be running
 # when this server starts (see jobs/serve_denoising_detector.sh, which patches

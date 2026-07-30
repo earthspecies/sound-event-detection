@@ -194,7 +194,7 @@ class ServedDenoisingDetectorClient(ServedDetectorClient):
             if meta.get("type") != DENOISING_DETECTOR_TYPE:
                 raise ValueError(
                     f"Server at {config.url} is not a denoising detector (GET / reported type "
-                    f"{meta.get('type')!r}); point the client at a sed.denoising_app server."
+                    f"{meta.get('type')!r}); point the client at a sed-denoising-server server."
                 )
             return cls(
                 run_client=run_client,

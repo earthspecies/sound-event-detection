@@ -1,17 +1,16 @@
 # Sound Event Detection
 
-Pretrained sound event detection models focused on bioacoustics.
+Pretrained sound event detection models focused on bioacoustics. Supports three main functions:
 
-Models are all served behind one HTTP contract and can be evaluated on strong- and weak-label benchmarks. The same served models drive large-scale inference (LSI) over corpora such as Xeno-Canto.
-
-Serving and everything downstream (evaluation, LSI) are separate steps: serve a model over HTTP, then point a client CLI at it via an http-client config.
+- Inference with pre-trained models: Within python, via a script, or via the large-scale inference (LSI) pipeline.
+- Evaluation of model performance on detection datasets.
+- Load pre-computed model detections for datasets like Xeno-Canto and iNaturalist. 
 
 ## Installation
 
-Requires [`uv`](https://docs.astral.sh/uv/). Pretrained encoder weights are pulled from Hugging Face, so export a token first:
+Requires [`uv`](https://docs.astral.sh/uv/).
 
 ```bash
-export HF_TOKEN=hf_...
 uv sync --group gpu   # omit --group gpu for CPU-only
 ```
 
@@ -46,10 +45,10 @@ uv run sed-folder --folder /path/to/audio \
 | Command | Purpose | Assumes running |
 |---|---|---|
 | `sed-folder` | Run BirdCODE over a folder of audio → selection tables | — (loads the model in-process) |
-| `sed.app` | Serve a frame detector or sliding-window detector | backing classifier server (sliding-window only) |
-| `sed.denoising_app` | Serve the denoising detector | a detector server + a separator server |
-| `sed-eval` | Run an evaluation against a served model | a `sed.app` / `sed.denoising_app` server |
-| `sed-lsi` | Large-scale inference over a dataset | a `sed.app` (`preds`) or `sed.denoising_app` (`denoised`/`stems`) server |
+| `sed-server` | Serve a frame detector or sliding-window detector | backing classifier server (sliding-window only) |
+| `sed-denoising-server` | Serve the denoising detector | a detector server + a separator server |
+| `sed-eval` | Run an evaluation against a served model | a `sed-server` / `sed-denoising-server` server |
+| `sed-lsi` | Large-scale inference over a dataset | a `sed-server` (`preds`) or `sed-denoising-server` (`denoised`/`stems`) server |
 | `sed-lsi-postprocess` | Turn LSI predictions into selection tables | — (reads shards) |
 | `sed-lsi-features` | Add per-event acoustic features to selection tables | — (reads shards) |
 
@@ -77,7 +76,9 @@ out.class_names                          # list[str] labels aligned to the class
 
 ## Serving models
 
-A **model config** YAML tells the server what to load, dispatching on `type`. The unified server (`sed.app`) reads its path from the `SED_MODEL_CONFIG` environment variable.
+For large-scale inference and evaluation, we serve the model over HTTP, then point a client CLI at it via an http-client config.
+
+A **model config** YAML tells the server what to load, dispatching on `type`. The unified server (`sed-server`) reads its path from the `SED_MODEL_CONFIG` environment variable.
 
 ### Frame detectors — `type: frame`
 
@@ -97,10 +98,10 @@ Serve either config the same way:
 
 ```bash
 SED_MODEL_CONFIG=configs/birdcode/models/birdcode_esp_research.yml \
-    uv run sed.app --host 0.0.0.0 --port 8100
+    uv run sed-server --host 0.0.0.0 --port 8100
 ```
 
-`sed.app` accepts `--host` (default `localhost`), `--port` (default `8100`), `--workers`, `--reload`, and `--log-level`. `SED_DEVICE=cpu|cuda` selects the device (default: cuda if available).
+`sed-server` accepts `--host` (default `localhost`), `--port` (default `8100`), `--workers`, `--reload`, and `--log-level`. `SED_DEVICE=cpu|cuda` selects the device (default: cuda if available).
 
 Ablation checkpoints use the same `type: frame` shape:
 `configs/birdcode/models/ablations/`.
@@ -127,7 +128,7 @@ The external servers write their own `server.addr`; point the config's `addr_fil
 
 ```bash
 SED_MODEL_CONFIG=configs/birdcode/models/baselines/audioprotopnet_2s.yml \
-    uv run sed.app --port 8100
+    uv run sed-server --port 8100
 ```
 
 `beats_sl_all` runs at 16 kHz — evaluate it with `frame_eval_16k.yml` (frame detection) or `birdset_clip_eval_16k.yml` (clip classification). Its backing classifier is served in-repo:
@@ -140,16 +141,18 @@ echo "HOST:8200" > .server_addrs/beats_sl_all.addr   # path the config's addr_fi
 
 # 2. the sliding-window wrapper
 SED_MODEL_CONFIG=configs/birdcode/models/baselines/beats_sl_all_2s.yml \
-    uv run sed.app --port 8100
+    uv run sed-server --port 8100
 ```
 
 ### Denoising detector — `type: denoising_detector`
+
+NOTE: This requires a separator server to be running. Separator server code will be provided at a later date.
 
 Wraps a detector client and a source-separator client, adding `POST /separate_and_detect` (used by LSI) to the standard contract. Both backing servers must be up when it starts. Its model config names them as pure http-client configs:
 
 ```yaml
 type: denoising_detector
-detector:  {url: http://localhost:8100, timeout: 300}   # a sed.app detector server
+detector:  {url: http://localhost:8100, timeout: 300}   # a sed-server detector server
 separator: {url: http://localhost:8200, timeout: 300}   # a separator server
 threshold: 0.5
 resampling_method: torchaudio_kaiser_fast
@@ -158,10 +161,10 @@ resampling_method: torchaudio_kaiser_fast
 ```bash
 # with a detector server and a separator server already running:
 SED_MODEL_CONFIG=configs/birdcode/models/denoising_detector.yml \
-    uv run sed.denoising_app --host 0.0.0.0 --port 8110
+    uv run sed-denoising-server --host 0.0.0.0 --port 8110
 ```
 
-`sed.denoising_app` takes the same options as `sed.app` (default port `8110`).
+`sed-denoising-server` takes the same options as `sed-server` (default port `8110`).
 
 ### HTTP contract
 
@@ -231,9 +234,9 @@ The run config's `output.detail` selects what is stored per recording — and wh
 
 | `detail` | Stored | Server |
 |---|---|---|
-| `preds` | combined framewise predictions | a `sed.app` detector server |
-| `denoised` | predictions + a threshold-gated denoised waveform | a `sed.denoising_app` server |
-| `stems` | the above + every separated stem (audio + preds) | a `sed.denoising_app` server |
+| `preds` | combined framewise predictions | a `sed-server` detector server |
+| `denoised` | predictions + a threshold-gated denoised waveform | a `sed-denoising-server` server |
+| `stems` | the above + every separated stem (audio + preds) | a `sed-denoising-server` server |
 
 ### Postprocess — `sed-lsi-postprocess`
 

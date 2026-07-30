@@ -15,7 +15,7 @@ is a YAML pointed to by the ``SED_MODEL_CONFIG`` environment variable::
 Deploy with::
 
     SED_MODEL_CONFIG=configs/birdcode/models/denoising_detector.yml \\
-        uv run sed.denoising_app --host localhost --port 8110
+        uv run sed-denoising-server --host localhost --port 8110
 
 Both backend servers must be up when this server starts: the wrapped clients
 fetch their metadata at construction (which happens at lifespan startup, by
