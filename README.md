@@ -28,6 +28,14 @@ Run the pretrained BirdCODE detector (loaded from the Hub) over every audio file
 uv run sed-folder --folder /path/to/audio
 ```
 
+Two short demo recordings are provided, so you can check your install end to end:
+
+```bash
+uv run sed-folder --folder tests/samples/demo/audio
+```
+
+This writes `tests/samples/demo/audio/BirdCODE_predictions/{20230730,20260623}.txt`, which should match the tables in `tests/samples/demo/output_expected/`. On CPU it takes roughly 1.5 minutes after the model weights (~1.1 GB) are downloaded.
+
 Postprocessing is applied: By default, per-frame detections are thresholded at 0.5, boxes with the same label are merged if separated by less than 1 second, and non-maximal suppression is applied with an IoU threshold of 0.8. Geography filtering is off by default; enable it with `--geo-filter`, a directory of `*.gpkg` range maps, and the recording site's coordinates (applied to every file):
 
 ```bash
