@@ -1,0 +1,2 @@
+Begin Time (s)	End Time (s)	Species	Score
+3.8157894736842106	5.7894736842105265	Corvus brachyrhynchos	0.6134416
