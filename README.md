@@ -28,7 +28,7 @@ Run the pretrained BirdCODE detector (loaded from the Hub) over every audio file
 uv run sed-folder --folder /path/to/audio
 ```
 
-Two short demo recordings are provided, so you can check your install end to end:
+Two short demo recordings are provided. To run BirdCODE on them, do:
 
 ```bash
 uv run sed-folder --folder tests/samples/demo/audio
