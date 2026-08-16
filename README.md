@@ -4,17 +4,19 @@ Pretrained sound event detection models focused on bioacoustics. Supports three 
 
 - Inference with pre-trained models: Within python, via a script, or via the large-scale inference (LSI) pipeline.
 - Evaluation of model performance on detection datasets.
-- Load pre-computed model detections for datasets like Xeno-Canto and iNaturalist. 
+- Load pre-computed model detections for datasets like Xeno-Canto and iNaturalist.
 
 ## Installation
 
-Requires [`uv`](https://docs.astral.sh/uv/).
+Requires [`uv`](https://docs.astral.sh/uv/). Installation may take several minutes. GPU is not required but will improve speed.
+
+Required packages are listed in `pyproject.toml`. To install them, run:
 
 ```bash
 uv sync --group gpu   # omit --group gpu for CPU-only
 ```
 
-All commands run through `uv run`. Evaluation and LSI also need the dataset storage referenced by `configs/data/*.yml`.
+All commands run through `uv run`. It may be necessary to include `--group gpu` if using a GPU. Evaluation and LSI also need the dataset storage referenced by `configs/data/*.yml`.
 
 Large-scale inference and using precomputed selection tables both require [`alp-data`](https://github.com/earthspecies/alp-data/), which is already included in `pyproject.toml`.
 
